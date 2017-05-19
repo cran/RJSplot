@@ -1,0 +1,73 @@
+body {
+  font-family: sans-serif;
+  color: #333;
+  font-size: 16px;
+}
+
+body>div{
+  padding: 0px 10px;
+  margin: 8px 10px;
+}
+
+div.clear {
+  clear: both;
+}
+
+div#menu>ul {
+  list-style-type: none;
+  padding: 0;
+  float: right;
+  margin-bottom: 0;
+}
+
+div#menu>ul>li{
+  width: 180px;
+  padding: 4px 0;
+  margin: 2px;
+  background-color: #aaa;
+  text-align: center;
+}
+
+div#menu>ul>li>a{
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+}
+
+div#content>h2 {
+  color: #aaa;
+}
+
+div#content>form>fieldset {
+  max-width: 600px;
+  margin-bottom: 16px;
+  border: 0px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+div#content>form>fieldset>legend {
+  background-color: #fff;
+  padding: 0 10px;
+}
+
+div#content>form>fieldset>p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+div#content>form>fieldset>input {
+  width: 200px;
+}
+
+div#content>form>fieldset>textarea {
+  width: 560px;
+}
+
+div#content>iframe{
+  width: 100%;
+  height: 500px;
+  border: 0px;
+  margin: 0px;
+  overflow: hidden;
+}

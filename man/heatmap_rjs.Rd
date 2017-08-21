@@ -14,7 +14,8 @@ The function creates a folder in your computer with an HTML document named index
 }
 \usage{
 heatmap_rjs(data, metadata = NULL, scale = c("row", "column", "none"), cluster = TRUE,
-            color=c("Reds","Greens","Blues","RdBkGr","RdWhBu"),
+            color = c("Reds", "Greens", "Blues", "RdBkGr", "RdWhBu"),
+            na.color = "transparent", cex = 1,
             plot = TRUE, jupyter = FALSE, dir = "Heatmap")
 }
 \arguments{
@@ -23,6 +24,8 @@ heatmap_rjs(data, metadata = NULL, scale = c("row", "column", "none"), cluster =
 \item{scale}{character indicating if the values should be centered and scaled in either the row direction or the column direction, or none. The default value is "none".}
 \item{cluster}{logical value to enable (\code{TRUE}) or disable (\code{FALSE}) data clustering.}
 \item{color}{character indicating the color scale to paint values. The default value is "Blues".}
+\item{na.color}{character indicating the color to use for missing values. Transparent by default.}
+\item{cex}{number indicating the amount by which plotting text and symbols should be scaled relative to the default.}
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}

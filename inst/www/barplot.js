@@ -47,9 +47,10 @@ window.onload = function(){
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
 
-  svg.append("style").text("text { font: 10px sans-serif; }"+
-".axis { font: 10px sans-serif; }"+
-".axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }");  
+  var cex = json.cex?json.cex:1;
+
+  svg.append("style").text("text { font-size: "+(cex*10)+"px; font-family: sans-serif; }"+
+".axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }"); 
 
   svg = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -63,7 +64,6 @@ window.onload = function(){
 		  .attr("x", width)
 		  .attr("y", -4)
 		  .style("text-anchor", "end")
-		  .style("font-size", "10px") 
 		  .text(json.labels.x);
 
   svg.selectAll(".x.axis .tick text")
@@ -81,7 +81,6 @@ window.onload = function(){
 		  .attr("y", 12)
 		  .attr("x", 0)
 		  .style("text-anchor", "end")
-		  .style("font-size", "10px") 
 		  .text(json.labels.y);
 
   // initialize bars

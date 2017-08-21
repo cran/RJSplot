@@ -14,7 +14,7 @@ The function creates a folder in your computer with an HTML document named index
 }
 
 \usage{
-boxplot_rjs(data, xlab = "", ylab = "", ylim = NA,
+boxplot_rjs(data, xlab = "", ylab = "", ylim = NA, cex = 1,
             plot = TRUE, jupyter = FALSE, dir = "Boxplot")
 }
 \arguments{
@@ -22,6 +22,7 @@ boxplot_rjs(data, xlab = "", ylab = "", ylim = NA,
 \item{xlab}{a title for the x axis.}
 \item{ylab}{a title for the y axis.}
 \item{ylim}{a vector with two values which specifies the Y minimun and maximun values in the representation.}
+\item{cex}{number indicating the amount by which plotting text and symbols should be scaled relative to the default.}
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}

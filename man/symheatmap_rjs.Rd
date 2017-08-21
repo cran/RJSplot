@@ -13,7 +13,7 @@ The function creates a folder in your computer with an HTML document named index
   \code{\link{dendrogram_rjs}}, \code{\link{densityplot_rjs}}, \code{\link{genomemap_rjs}}, \code{\link{heatmap_rjs}}, \code{\link{manhattan_rjs}}, \code{\link{network_rjs}}, \code{\link{scatterplot_rjs}}, \code{\link{symheatmap_rjs}}, \code{\link{wordcloud_rjs}}, \code{\link{boxplot_rjs}}, \code{\link{bubbles_rjs}}, \code{\link{hiveplot_rjs}}, \code{\link{piechart_rjs}}, \code{\link{barplot_rjs}}, \code{\link{tables_rjs}}, \code{\link{surface3d_rjs}}, \code{\link{scatter3d_rjs}}.
 }
 \usage{
-symheatmap_rjs(links, nodes = NA, group = NULL, label = NULL,
+symheatmap_rjs(links, nodes = NA, group = NULL, label = NULL, cex = 1,
                plot = TRUE, jupyter = FALSE, dir = "SymHeatmap")
 }
 \arguments{
@@ -21,6 +21,7 @@ symheatmap_rjs(links, nodes = NA, group = NULL, label = NULL,
 \item{nodes}{a node list stored in a data frame object with rownames as node id.}
 \item{group}{a vector giving the column of \code{nodes} to show as group.}
 \item{label}{a vector giving the column of \code{nodes} to show as label.}
+\item{cex}{number indicating the amount by which plotting text and symbols should be scaled relative to the default.}
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}

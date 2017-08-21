@@ -1,5 +1,5 @@
 #create json
-densityJSON<-function(data, xlab, ylab){
+densityJSON<-function(data, xlab, ylab, cex){
 
 if(is.matrix(data))
   data <- as.data.frame(data)
@@ -18,13 +18,16 @@ for(i in seq_along(data)){
 
 labels <- list(x = xlab, y = ylab)
 
-json <- list(data = json, labels = labels)
+if(!is.numeric(cex))
+  cex <- 1
+
+json <- list(data = json, labels = labels, cex = cex)
 
 return(toJSON(json))
 }
 
 
 #create html wrapper for boxplot
-densityplot_rjs<-function(data, xlab = "", ylab = "", plot = TRUE, jupyter = FALSE, dir = "DensityPlot"){
-createHTML(dir, c("d3.min.js","jspdf.min.js","functions.js","density.js"), densityJSON(data, xlab, ylab), plot, jupyter)
+densityplot_rjs<-function(data, xlab = "", ylab = "", cex = 1, plot = TRUE, jupyter = FALSE, dir = "DensityPlot"){
+createHTML(dir, c("d3.min.js","jspdf.min.js","functions.js","density.js"), densityJSON(data, xlab, ylab, cex), plot, jupyter)
 }

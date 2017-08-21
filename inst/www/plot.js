@@ -26,16 +26,18 @@ var yAxis = d3.svg.axis()
 
 window.onload = function(){
 
+  var json = JSON.parse(d3.select("#data").text());
+
+  var cex = json.cex?json.cex:1;
+
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom);
   svg.append("style")
-      .text("text { font: 10px sans-serif; }"+
+      .text("text { font: "+(cex*10)+"px sans-serif; }"+
       ".axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }");
   svg = svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  var json = JSON.parse(d3.select("#data").text());
 
   json.nodes.forEach(function(d) {
     d.x = +d.x;

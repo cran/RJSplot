@@ -45,7 +45,7 @@ createHTML <- function(dir, dependencies, json, show = TRUE, jupyter = FALSE){
   if(identical(jupyter,TRUE) && requireNamespace("IRdisplay")){
     IRdisplay::display_html(paste0('<iframe src="',dir,'/index.html" width="100%" height="600" frameborder="0" marginwidth="0" marginheight="0" onload="this.style.height=this.contentDocument.body.scrollHeight+\'px\';"></iframe>'))
   }else{
-    message(paste0("The graph has been generated in the ",dir," folder."))
+    message(paste0("The graph has been generated in the \"",normalizePath(dir),"\" path."))
     if(identical(show,TRUE))
       browseURL(normalizePath(indexhtml))
   }

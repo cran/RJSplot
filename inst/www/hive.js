@@ -13,8 +13,17 @@ window.onload = function(){
 
 var body = d3.select("body");
 
+  // Load the data
+  var graph = JSON.parse(d3.select("#data").text()),
+      nodes = [],
+      links = graph.links,
+      attr = graph.attr?graph.attr:{},
+      options = graph.options?graph.options:{},
+      cex = options.cex?options.cex:1,
+      defaultInfo;
+
 body.append("p").attr("id","info")
-  .style({"font-family": "sans-serif", "font-size": "12px", "margin":"20px 30px"});
+  .style({"font-family": "sans-serif", "font-size": (12*cex)+"px", "margin":"20px 30px"});
 
 var svg = body.append("div")
     .attr("class","plot")
@@ -32,13 +41,6 @@ var svg = body.append("div")
 
   svg = svg.append("g")
     .attr("transform", "translate(" + width/2 + "," + height/2 + ")");
-
-  // Load the data
-  var graph = JSON.parse(d3.select("#data").text()),
-      nodes = [],
-      links = graph.links,
-      attr = graph.attr?graph.attr:{},
-      defaultInfo;
 
   // Prepare nodes
   graph.nodes.forEach(function(n){

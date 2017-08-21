@@ -5,6 +5,8 @@ var docSize = viewport(),
 
 width = width - margin.left - margin.right;
 height = height - margin.top - margin.bottom;
+
+var numberShow = false;
 	
 window.onload = function(){
 
@@ -40,11 +42,13 @@ window.onload = function(){
         .height(height)	
         .domain(json.scale);
 
+  var cex = json.cex?json.cex:1;
+
   var svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)  
   svg.append("style")
-        .text("text { font: 10px sans-serif; } "+
+        .text("text { font-size: "+(cex*10)+"px; font-family: sans-serif; } "+
 ".box line, .box rect, .box circle { fill: #1f77b4; stroke: #000; stroke-width: 1px; } "+
 ".box .center { stroke-dasharray: 3,3; } "+
 ".box .outlier { fill: none;  stroke: #000; } "+
@@ -80,7 +84,6 @@ window.onload = function(){
 		  .attr("y", 12)
 		  .attr("x", 0)
 		  .style("text-anchor", "end")
-		  .style("font-size", "10px") 
 		  .text(json.labels.y);
 	
   svg.append("g")
@@ -91,7 +94,6 @@ window.onload = function(){
 		  .attr("x", width)
 		  .attr("y", -4)
 		  .style("text-anchor", "end")
-		  .style("font-size", "10px") 
 		  .text(json.labels.x);
 
   svg.selectAll(".x.axis .tick text")
@@ -107,20 +109,39 @@ window.onload = function(){
 		.attr("transform", function(d){ return "translate(" +  x(d.name)  + ",0)"; })
       .call(chart.width(x.rangeBand()))
       .on("mouseover", function(){
-	d3.select(this).selectAll("text")
+        if(!numberShow)
+	  d3.select(this).selectAll("text")
 		.transition()
 		.duration(500)
 		.style("opacity", 1)
 	})
       .on("mouseout", function(){
-	d3.select(this).selectAll("text")
+        if(!numberShow)
+	  d3.select(this).selectAll("text")
 		.transition()
 		.duration(500)
 		.style("opacity", 0)
 	});
 
+iconButton(d3.select("body"),"stats","data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNCAxNCIgaGVpZ2h0PSIxNCIgd2lkdGg9IjE0IiB2ZXJzaW9uPSIxLjEiPgo8cmVjdCByeD0iMiIgaGVpZ2h0PSIxMyIgd2lkdGg9IjEzIiBzdHJva2U9IiNjMGMwYzAiIHk9Ii41IiB4PSIuNSIgZmlsbD0iI2UwZTBlMCIvPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSguMjUyNTUpIiBmaWxsPSIjNjA2MDYwIj4KPHJlY3Qgc3R5bGU9ImNvbG9yLXJlbmRlcmluZzphdXRvO2NvbG9yOiMwMDAwMDA7aXNvbGF0aW9uOmF1dG87bWl4LWJsZW5kLW1vZGU6bm9ybWFsO3NoYXBlLXJlbmRlcmluZzphdXRvO3NvbGlkLWNvbG9yOiMwMDAwMDA7aW1hZ2UtcmVuZGVyaW5nOmF1dG8iIGhlaWdodD0iOC44OTgzIiB3aWR0aD0iMS41NDI0IiB5PSIyLjU1MDgiIHg9IjIuNDkxNSIvPgo8cmVjdCBzdHlsZT0iY29sb3ItcmVuZGVyaW5nOmF1dG87Y29sb3I6IzAwMDAwMDtpc29sYXRpb246YXV0bzttaXgtYmxlbmQtbW9kZTpub3JtYWw7c2hhcGUtcmVuZGVyaW5nOmF1dG87c29saWQtY29sb3I6IzAwMDAwMDtpbWFnZS1yZW5kZXJpbmc6YXV0byIgaGVpZ2h0PSIzLjU1OTMiIHdpZHRoPSIxLjU0MjQiIHk9IjcuODg5OCIgeD0iNS45NzYiLz4KPHJlY3Qgc3R5bGU9ImNvbG9yLXJlbmRlcmluZzphdXRvO2NvbG9yOiMwMDAwMDA7aXNvbGF0aW9uOmF1dG87bWl4LWJsZW5kLW1vZGU6bm9ybWFsO3NoYXBlLXJlbmRlcmluZzphdXRvO3NvbGlkLWNvbG9yOiMwMDAwMDA7aW1hZ2UtcmVuZGVyaW5nOmF1dG8iIGhlaWdodD0iNi4yMjg4IiB3aWR0aD0iMS41NDI0IiB5PSI1LjIyMDMiIHg9IjQuMjM0Ii8+CjxyZWN0IHN0eWxlPSJjb2xvci1yZW5kZXJpbmc6YXV0bztjb2xvcjojMDAwMDAwO2lzb2xhdGlvbjphdXRvO21peC1ibGVuZC1tb2RlOm5vcm1hbDtzaGFwZS1yZW5kZXJpbmc6YXV0bztzb2xpZC1jb2xvcjojMDAwMDAwO2ltYWdlLXJlbmRlcmluZzphdXRvIiBoZWlnaHQ9IjcuNDE1MyIgd2lkdGg9IjEuNTQyNCIgeT0iNC4wMzM5IiB4PSI3LjcxOSIvPgo8cmVjdCBzdHlsZT0iY29sb3ItcmVuZGVyaW5nOmF1dG87Y29sb3I6IzAwMDAwMDtpc29sYXRpb246YXV0bzttaXgtYmxlbmQtbW9kZTpub3JtYWw7c2hhcGUtcmVuZGVyaW5nOmF1dG87c29saWQtY29sb3I6IzAwMDAwMDtpbWFnZS1yZW5kZXJpbmc6YXV0byIgaGVpZ2h0PSIyLjE5NDkiIHdpZHRoPSIxLjU0MjQiIHk9IjkuMjU0MiIgeD0iOS40NjEiLz4KPC9nPgo8L3N2Zz4K","show/hide Stats",displayNumbers,{"position":"absolute","top":"70px","right":"36px"})
+
 displayButtons();
 bioinfoLogo();
+}
+
+function displayNumbers(){
+  if(!numberShow){
+	  d3.selectAll("g.box").selectAll("text")
+		.transition()
+		.duration(500)
+		.style("opacity", 1)
+  }else{
+	  d3.selectAll("g.box").selectAll("text")
+		.transition()
+		.duration(500)
+		.style("opacity", 0)
+  }
+  numberShow = !numberShow;
 }
 
 function box(){

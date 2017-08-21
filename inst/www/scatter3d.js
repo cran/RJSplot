@@ -8,8 +8,11 @@ window.onload = function(){
 
       var vp = viewport();
       var data = JSON.parse(document.getElementById("data").textContent);
-      var maxDim = [Math.min(data.a[0],data.b[0],data.c[0]),Math.max(data.a[1],data.b[1],data.c[1])];
+
       var colorScale = new ColorScale();
+      var scaleX = new scaleLinear(data.a);
+      var scaleY = new scaleLinear(data.b);
+      var scaleZ = new scaleLinear(data.c);
 
       var container = document.body;
       var raycaster = new THREE.Raycaster();
@@ -32,7 +35,7 @@ window.onload = function(){
       camera.position.set(100,100,150);
 
       var controls = new THREE.OrbitControls(camera);
-      controls.target.set(scaleLinear((data.a[0]+data.a[1])/2),scaleLinear((data.b[0]+data.b[1])/2),scaleLinear((data.c[0]+data.c[1])/2));
+      controls.target.set(0,0,0);
       controls.userPanSpeed = 100;
 
       var scene = new THREE.Scene();
@@ -40,34 +43,34 @@ window.onload = function(){
       var scatterPlot = new THREE.Object3D();
       scene.add(scatterPlot);
 
-      var zero = v(scaleLinear(data.a[0])-5,scaleLinear(data.b[0])-5,scaleLinear(data.c[0])-5);
-      addLine(scatterPlot,zero,v(scaleLinear(data.a[1])+5, zero.y, zero.z));
-      addLine(scatterPlot,zero,v(zero.x, scaleLinear(data.b[1])+5, zero.z));
-      addLine(scatterPlot,zero,v(zero.x, zero.y, scaleLinear(data.c[1])+5));
+      var zero = v(-55,-55,-55);
+      addLine(scatterPlot,zero,v(55, zero.y, zero.z));
+      addLine(scatterPlot,zero,v(zero.x, 55, zero.z));
+      addLine(scatterPlot,zero,v(zero.x, zero.y, 55));
 
       var titleX = createText2D(data.xlab);
-      titleX.position.x = scaleLinear(data.a[1])+10+(data.xlab.length-1)*1.8;
+      titleX.position.x = 60+(data.xlab.length-1)*1.8;
       titleX.position.y = zero.y;
       titleX.position.z = zero.z;
       scatterPlot.add(titleX);
 
       var titleX = createText2D(data.ylab);
       titleX.position.x = zero.x;
-      titleX.position.y = scaleLinear(data.b[1])+10;
+      titleX.position.y = 60;
       titleX.position.z = zero.z;
       scatterPlot.add(titleX);
 
       var titleX = createText2D(data.zlab);
       titleX.position.x = zero.x;
       titleX.position.y = zero.y;
-      titleX.position.z = scaleLinear(data.c[1])+10;
+      titleX.position.z = 60;
       scatterPlot.add(titleX);
 
       var pointGeo = new THREE.Geometry();
       for(var i=0; i<data.len; i++){
-        var x = scaleLinear(data.x[i]);
-        var y = scaleLinear(data.y[i]);
-        var z = scaleLinear(data.z[i]);
+        var x = scaleX.get(data.x[i]);
+        var y = scaleY.get(data.y[i]);
+        var z = scaleZ.get(data.z[i]);
         var color = typeof data.color == "string" ? data.color : data.color[i];
         color = colorScale.get(color);
         pointGeo.vertices.push(v(x,y,z));
@@ -90,16 +93,19 @@ window.onload = function(){
         renderer.render(scene, camera);
       }
 
-      function scaleLinear(x){
-        var r = [-50,50],
-            d = maxDim;
-        return r[0] + ((r[1] - r[0]) * ((x - d[0]) / (d[1] - d[0])));
-      }
-
-      function invertLinear(x){
-        var r = maxDim,
-            d = [-50,50];
-        return r[0] + ((r[1] - r[0]) * ((x - d[0]) / (d[1] - d[0])));
+      function scaleLinear(domain){
+        this.r = [-50,50];
+        this.d = domain;
+        this.get = function(x){
+          var r = this.r,
+              d = this.d;
+          return r[0] + ((r[1] - r[0]) * ((x - d[0]) / (d[1] - d[0])));
+        }
+        this.invert = function(x){
+          var r = this.d,
+              d = this.r;
+          return r[0] + ((r[1] - r[0]) * ((x - d[0]) / (d[1] - d[0])));
+        }
       }
 
       function ColorScale(){
@@ -177,9 +183,9 @@ window.onload = function(){
       // Toggle rotation bool for points that we clicked
       if ( intersects.length > 0 && intersects[ 0 ].distanceToRay < 0.5 ) {
         var pos = intersects[ 0 ].point;
-        showPosition.innerHTML = data.xlab+": "+formatter(invertLinear(Math.round(pos.x)))+"<br/>"+
-                                 data.ylab+": "+formatter(invertLinear(Math.round(pos.y)))+"<br/>"+
-                                 data.zlab+": "+formatter(invertLinear(Math.round(pos.z)));
+        showPosition.innerHTML = data.xlab+": "+formatter(scaleX.invert(Math.round(pos.x)))+"<br/>"+
+                                 data.ylab+": "+formatter(scaleY.invert(Math.round(pos.y)))+"<br/>"+
+                                 data.zlab+": "+formatter(scaleZ.invert(Math.round(pos.z)));
       }
     }
 }

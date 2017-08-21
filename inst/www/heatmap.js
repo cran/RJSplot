@@ -1,9 +1,12 @@
 var docSize = viewport(),
     width = docSize.width - 60,
     height = 0,
-    margin = {top: 70, right: 160, bottom: 80, left: 110};
+    margin = {top: 70, right: 200, bottom: 140, left: 110},
+    cellSize = 14;
 
 width = width - margin.left - margin.right;
+
+var NAcolor = "transparent";
 
 var colorScales = {
         Reds: ["#fee0d2","#fc9272","#de2d26"],
@@ -23,24 +26,31 @@ var colorScales = {
 
 window.onload = function(){
 
-  var data = JSON.parse(d3.select("#data").text());
+  var data = JSON.parse(d3.select("#data").text()),
+      options = data.options?data.options:{};
 
-  if(data.metadata){
-    margin.top = margin.top + data.metadata.dim[0]*14 + 4;
-  }
+  if(options.NAcolor)
+    NAcolor = options.NAcolor;
 
-  height = data.matrix.dim[0]*14;
+  var cex = options.cex?options.cex:1;
+
+  cellSize = cellSize*cex;
+
+  if(data.metadata)
+    margin.top = margin.top + data.metadata.dim[0]*cellSize + 4;
+
+  height = data.matrix.dim[0]*cellSize;
 
   d3.select("body")
     .on("click",function(){ d3.select(".scalePicker").remove(); })
     .append("div")
       .attr("class","tooltip")
-      .style({"position":"absolute","display":"none","background-color":"rgba(0,0,0,0.8)","font-family":"sans-serif","font-size":"12px","color":"white","padding":"4px"});
+      .style({"position":"absolute","display":"none","background-color":"rgba(0,0,0,0.8)","font-family":"sans-serif","font-size":(cex*12)+"px","color":"white","padding":"4px"});
 
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom);
-    svg.append("style").text("text { font-size: 10px; font-family: sans-serif; }"+
+    svg.append("style").text("text { font-size: "+(cex*10)+"px; font-family: sans-serif; }"+
 ".axis path { fill: none; stroke: none; }"+
 ".axis line { fill: none; stroke: #aaa; }"+
 ".link { vector-effect: non-scaling-stroke; fill: none; stroke: #ccc; stroke-width: 1.5px; }"+
@@ -73,7 +83,7 @@ window.onload = function(){
   dendrogram(colClust,data.cols,width,(data.metadata?70:margin.top)-4);
 
   drawMetadata(colClust,data.metadata);
-  drawMatrix(matrix,data.matrix,data.color);
+  drawMatrix(matrix,data.matrix,options.scaleColor);
 
   displayNames(rowNames,data.matrix.rows,[0,height],"right");
   displayNames(colNames,data.matrix.cols,[0,width],"bottom");
@@ -217,7 +227,12 @@ function drawMatrix(svg,matrix,color){
   function fillCells(color){
     c.range(colorScales[color]);
     d3.select(".scale rect").attr("fill", "url(#"+color+")")
-    d3.selectAll(".cell").transition().duration(500).style("fill", function(d,i) { return c((matrix.scaled || matrix.data)[i]); })
+    d3.selectAll(".cell").transition().duration(500).style("fill", function(d,i) {
+      var val = (matrix.scaled || matrix.data)[i];
+      if(val == null)
+        return NAcolor;
+      return c(val);
+    })
   }
 
   function displayScale(svg,domain){
@@ -277,10 +292,10 @@ function drawMatrix(svg,matrix,color){
       var scale = [1,1], translate = [0,0];
 
       if(ex[0][0]==ex[1][0] || ex[0][1]==ex[1][1]){
-        height = rows * 14;
+        height = rows * cellSize;
         ex = [[0,0],[cols,rows]];
       }else{
-        height = (ex[1][1] - ex[0][1]) * 14;
+        height = (ex[1][1] - ex[0][1]) * cellSize;
         scale = [
           cols / (ex[1][0] - ex[0][0]),
           rows / (ex[1][1] - ex[0][1])

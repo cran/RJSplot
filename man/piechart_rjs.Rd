@@ -14,10 +14,11 @@ The function creates a folder in your computer with an HTML document named index
 }
 
 \usage{
-piechart_rjs(data, plot = TRUE, jupyter = FALSE, dir = "Piechart")
+piechart_rjs(data, cex = 1, plot = TRUE, jupyter = FALSE, dir = "Piechart")
 }
 \arguments{
 \item{data}{a Data Frame or Matrix from which the data for each pie will be taken.}
+\item{cex}{number indicating the amount by which plotting text and symbols should be scaled relative to the default.}
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}

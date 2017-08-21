@@ -16,7 +16,7 @@ The function creates a folder in your computer with an HTML document named index
 wordcloud_rjs(data, plot = TRUE, jupyter = FALSE, dir = "WordCloud")
 }
 \arguments{
-\item{data}{a two column data Frame with the words to display and their frecuency.}
+\item{data}{a two column data Frame with the words to display and their frequency.}
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}

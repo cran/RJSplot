@@ -10,12 +10,12 @@ var triangle = true;
 
 window.onload = function(){
 
-  var json = JSON.parse(d3.select("#data").text());
-
-  var attr = json.attr?json.attr:{};
+  var json = JSON.parse(d3.select("#data").text()),
+      attr = json.attr?json.attr:{},
+      options = json.options?json.options:{};
 
   var x = d3.scale.ordinal().rangeBands([0, width]),
-      z = d3.scale.linear().range([0.1,1]).domain(d3.extent(json.links, function(d){return d[attr.weight];})).clamp(true),
+      z = d3.scale.linear().range([0.1,1]).domain(d3.extent(json.links, function(d){return d[attr.weight];})),
       color = d3.scale.category10();
 
   displaySelect();
@@ -25,9 +25,11 @@ window.onload = function(){
     .style("text-align","center")
     .append("svg")
 
-    svg.append("style").text("text {font-size:10px;font-family:sans-serif;}");
+  var cex = options.cex?options.cex:1;
 
-    svg = svg.append("g")
+  svg.append("style").text("text { font-size: "+(cex*10)+"px; font-family: sans-serif; }");
+
+  svg = svg.append("g")
 
   var matrix = [],
       nodes = json.nodes,
@@ -42,10 +44,8 @@ window.onload = function(){
 
   // Convert links to matrix; count character occurrences.
   json.links.forEach(function(link) {
-    matrix[link.source][link.target].z += link[attr.weight];
-    matrix[link.target][link.source].z += link[attr.weight];
-   // matrix[link.source][link.source].z += link[attr.weight];
-   // matrix[link.target][link.target].z += link[attr.weight];
+    matrix[link.source][link.target].z = link[attr.weight];
+    matrix[link.target][link.source].z = link[attr.weight];
     nodes[link.source].count += link[attr.weight];
     nodes[link.target].count += link[attr.weight];
   });
@@ -106,7 +106,11 @@ window.onload = function(){
         .style("fill-opacity", function(d) { return z(d.z); })
         .style("fill", function(d) { return nodes[d.x][attr.group] == nodes[d.y][attr.group] ? color(nodes[d.x][attr.group]) : null; })
         .on("mouseover", mouseover)
-        .on("mouseout", mouseout);
+        .on("mouseout", mouseout)
+        .append("title")
+          .text(function(d) {
+            return nodes[d.x].name + " - " + nodes[d.y].name + " \nvalue: " + formatter(d.z);
+          })
   }
 
   function mouseover(p) {
@@ -209,7 +213,7 @@ function displaySelect() {
     controls.append("select")
         .attr("class", "order")
         .selectAll("option")
-          .data([["name","by name"],["count","by Frecuency"],["group","by Cluster"]])
+          .data([["name","by name"],["count","by Frequency"],["group","by Cluster"]])
         .enter().append("option")
           .property("value",function(d){ return d[0]; })
           .text(function(d){ return d[1]; })

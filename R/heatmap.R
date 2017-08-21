@@ -1,4 +1,4 @@
-heatmapJSON <- function(x, meta, scale, cluster, color){
+heatmapJSON <- function(x, meta, scale, cluster, color, na.color, cex){
 if(!is.matrix(x) || !is.numeric(x)){
   x <- data.matrix(x)
   warning("data: a numeric matrix should be passed") 
@@ -59,9 +59,14 @@ meta <- toJSON(meta)
 if(length(color)!=1 || !(color %in% c("Reds","Greens","Blues","RdBkGr","RdWhBu")))
   color <- "Blues"
 
-return(paste0("{\"rows\":",rowsJSON,",\"cols\":",colsJSON,",\"matrix\":",mat,",\"metadata\":",meta,",\"color\":\"",color,"\"}"))
+if(!is.numeric(cex))
+  cex <- 1
+
+options <- toJSON(list(scaleColor = color, NAcolor = na.color, cex = cex))
+
+return(paste0("{\"rows\":",rowsJSON,",\"cols\":",colsJSON,",\"matrix\":",mat,",\"metadata\":",meta,",\"options\":",options,"}"))
 }
 
-heatmap_rjs<-function(data, metadata = NULL, scale = c("row", "column", "none"), cluster = TRUE, color=c("Reds","Greens","Blues","RdBkGr","RdWhBu"), plot = TRUE, jupyter = FALSE, dir = "Heatmap"){
-createHTML(dir, c("d3.min.js", "jspdf.min.js", "functions.js", "heatmap.js"), heatmapJSON(data, metadata, scale, cluster, color), plot, jupyter)
+heatmap_rjs<-function(data, metadata = NULL, scale = c("row", "column", "none"), cluster = TRUE, color=c("Reds","Greens","Blues","RdBkGr","RdWhBu"), na.color = "transparent", cex = 1, plot = TRUE, jupyter = FALSE, dir = "Heatmap"){
+createHTML(dir, c("d3.min.js", "jspdf.min.js", "functions.js", "heatmap.js"), heatmapJSON(data, metadata, scale, cluster, color, na.color, cex), plot, jupyter)
 }

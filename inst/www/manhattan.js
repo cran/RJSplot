@@ -27,8 +27,10 @@ window.onload = function(){
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
 
+  var cex = data.cex?data.cex:1;
+
   svg.append("style")
-    .text("text { font: 10px sans-serif; } "+
+    .text("text { font: "+(cex*10)+"px sans-serif; } "+
   ".axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }");
 
   var defs = svg.append("defs");
@@ -51,6 +53,8 @@ window.onload = function(){
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var length = 0, v = [], axis = data.axis[0], dist = data.axis[1];
+
+  color.domain(data.scale.map(function(d){ return d.chr; }));
 
   data.scale.unshift({chr: "", end: 0});
   data.scale.forEach(function(d) {

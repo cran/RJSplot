@@ -1,7 +1,8 @@
 var docSize = viewport(),
     width = docSize.width - 60,
     height = 0,
-    margin = {top: 10, right: 160, bottom: 10, left: 10};
+    margin = {top: 10, right: 160, bottom: 10, left: 10},
+    cellSize = 14;
 
 width = width - margin.left - margin.right;
 
@@ -11,18 +12,21 @@ window.onload = function(){
 
   var data = JSON.parse(d3.select("#data").text());
 
-  height = data.size*14;
+  var cex = data.cex?data.cex:1;
+
+  cellSize = cellSize*cex;
+  height = data.size*cellSize;
 
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom);
-    svg.append("style").text("text {font-size:10px;font-family:sans-serif;}");
+    svg.append("style").text("text { font-size: "+(cex*10)+"px; font-family: sans-serif; }");
     svg = svg.append("g")
       .attr("transform", "translate("+margin.left+","+margin.top+")");
 
   var gap = 0;
   if(data.metadata){
-    gap = data.metadata.dim[1]*14;
+    gap = data.metadata.dim[1]*cellSize;
     drawMetadata(svg.append("g").attr("transform", "translate("+(width - gap)+",0)"),data.metadata);
     gap = gap + 4;
   }
@@ -64,11 +68,8 @@ window.onload = function(){
 function drawMetadata(svg,metadata){
     var rows = metadata.dim[0],
       cols = metadata.dim[1],
-      x = d3.scale.linear().domain([0, cols]).range([0, cols*14]),
+      x = d3.scale.linear().domain([0, cols]).range([0, cols*cellSize]),
       y = d3.scale.linear().domain([0, rows]).range([0, height]);
-
-    var cellWidth = 14,
-        cellHeight = 14;
 
     if(cols==1)
       metadata.cols = [metadata.cols];
@@ -83,8 +84,8 @@ function drawMetadata(svg,metadata){
         .data(d)
       .enter().append("rect")
         .attr("class","metacell "+metadata.cols[j])
-        .attr("width", cellWidth)
-        .attr("height", cellHeight)
+        .attr("width", cellSize)
+        .attr("height", cellSize)
         .attr("x", function(d,i){ return x(j); })
         .attr("y", function(d,i){ return y(i); })
         .style("fill", function(d,i) { return c(d); })

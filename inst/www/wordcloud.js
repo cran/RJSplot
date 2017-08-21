@@ -116,10 +116,10 @@ function displayControls() {
           display();
         })
         .selectAll("option")
-          .data(["sans-serif","serif","monospace"])
+          .data([["sans-serif",'Arial, Helvetica, sans-serif'],["serif",'"Times New Roman", Times, serif'],["monospace",'"Courier New", Courier, monospace']])
         .enter().append("option")
-          .property("value",String)
-          .text(String)
+          .property("value",function(d){ return d[1]; })
+          .text(function(d){ return d[0]; })
 
     controls.append("p").text("Change angle:")
 

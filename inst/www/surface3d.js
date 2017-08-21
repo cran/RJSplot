@@ -86,7 +86,7 @@ window.onload = function(){
       camera = new THREE.PerspectiveCamera( 45, vp.width / vp.height, 1, 10000 );
       scene = new THREE.Scene();
       controls = new THREE.OrbitControls(camera);
-      controls.target.set(0,0,0);
+      controls.target.set(500,500,500);
       controls.userPanSpeed = 100;
       camera.position.set(2000,2000,2000);
 

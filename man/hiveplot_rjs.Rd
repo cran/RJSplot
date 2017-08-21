@@ -14,7 +14,7 @@ The function creates a folder in your computer with an HTML document named index
 }
 \usage{
 hiveplot_rjs(links, nodes = NA, group = NULL, size = NULL, color = NULL,
-             plot = TRUE, jupyter = FALSE, dir = "HivePlot")
+             cex = 1, plot = TRUE, jupyter = FALSE, dir = "HivePlot")
 }
 \arguments{
 \item{links}{an edge list table stored in a data frame with three possible columns (source node id, target node id and link value).}
@@ -22,6 +22,7 @@ hiveplot_rjs(links, nodes = NA, group = NULL, size = NULL, color = NULL,
 \item{group}{column name of \code{nodes} data frame which describes visualized axes.}
 \item{size}{column name of \code{nodes} data frame which describes each node size.}
 \item{color}{column name of \code{nodes} data frame which describes each node color.}
+\item{cex}{number indicating the amount by which plotting text and symbols should be scaled relative to the default.}
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}

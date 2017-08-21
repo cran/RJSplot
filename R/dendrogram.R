@@ -24,7 +24,7 @@ dendrogramJSON<-function(hc){
   return(node[nrow(merge)])
 }
 
-dendrometaJSON <- function(data, metadata, method){
+dendrometaJSON <- function(data, metadata, method, cex){
 
   if(class(data)!="dist"){
     data <- as.dist(data)
@@ -63,10 +63,13 @@ dendrometaJSON <- function(data, metadata, method){
 
   metadata <- toJSON(metadata)
 
-  return(paste0("{\"root\":",dendrogram,",\"size\":",attr(data,"Size"),",\"metadata\":",metadata,"}"))
+  if(!is.numeric(cex))
+    cex <- 1
+
+  return(paste0("{\"root\":",dendrogram,",\"size\":",attr(data,"Size"),",\"metadata\":",metadata,",\"cex\":",cex,"}"))
 }
 
 #create html wrapper for Dendrogram
-dendrogram_rjs<-function(data, metadata = NULL, method = "complete", plot = TRUE, jupyter = FALSE, dir = "Dendrogram"){
-createHTML(dir, c("d3.min.js", "jspdf.min.js", "functions.js", "dendrogram.js"), dendrometaJSON(data,metadata,method), plot, jupyter)
+dendrogram_rjs<-function(data, metadata = NULL, method = "complete", cex = 1, plot = TRUE, jupyter = FALSE, dir = "Dendrogram"){
+createHTML(dir, c("d3.min.js", "jspdf.min.js", "functions.js", "dendrogram.js"), dendrometaJSON(data,metadata,method,cex), plot, jupyter)
 }

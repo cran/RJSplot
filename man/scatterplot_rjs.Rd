@@ -14,7 +14,8 @@ The function creates a folder in your computer with an HTML document named index
 }
 \usage{
 scatterplot_rjs(x, y, id = NA, xlab = "", ylab = "", xlim = NA, ylim = NA, col = NA,
-pch = NA, abline.x = NA, abline.y = NA, plot = TRUE, jupyter = FALSE, dir = "ScatterPlot")
+                pch = NA, abline.x = NA, abline.y = NA, cex = 1,
+                plot = TRUE, jupyter = FALSE, dir = "ScatterPlot")
 }
 \arguments{
 \item{x}{a vector with the x data of each point.}
@@ -28,6 +29,7 @@ pch = NA, abline.x = NA, abline.y = NA, plot = TRUE, jupyter = FALSE, dir = "Sca
 \item{pch}{a character vector with the shape of each point. It should be one of: 1-"circle", 2-"triangle-up", 3-"cross", 4-"square", 5-"diamond", 6-"triangle-down".}
 \item{abline.x}{a numeric vector with x coordenates where a vertical line will be placed.}
 \item{abline.y}{a numeric vector with y coordenates where a horizontal line will be placed.}
+\item{cex}{number indicating the amount by which plotting text and symbols should be scaled relative to the default.}
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}

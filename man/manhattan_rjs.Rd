@@ -14,7 +14,7 @@ The function creates a folder in your computer with an HTML document named index
 }
 \usage{
 manhattan_rjs(data, assembly, axisv, distv, cell = 1e+06, outliers = TRUE, ylab = "score",
-yscale = NA, plot = TRUE, jupyter = FALSE, dir = "ManhattanPlot")
+yscale = NA, cex = 1, plot = TRUE, jupyter = FALSE, dir = "ManhattanPlot")
 }
 \arguments{
 \item{data}{a data frame with four columns (identifier, chromosome/scaffold, position, score).}
@@ -25,6 +25,7 @@ yscale = NA, plot = TRUE, jupyter = FALSE, dir = "ManhattanPlot")
 \item{outliers}{logical value to enable (\code{TRUE}) or disable (\code{FALSE}) outliers.}
 \item{ylab}{a title for the y axis.}
 \item{yscale}{a vector with two values which specifies the minimun and maximun limits in the representation. By default maximun and minimun scores are taken as the limits.}
+\item{cex}{number indicating the amount by which plotting text and symbols should be scaled relative to the default.}
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}

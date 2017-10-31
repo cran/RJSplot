@@ -1,4 +1,4 @@
-806b9f26f7ac525a47d00bdaa01fcd07 *DESCRIPTION
+8beaa2637a681fc27318833440151061 *DESCRIPTION
 b78fbc99e65217b0953b1387118a8630 *NAMESPACE
 1177310a563392c45454630a39c53a1d *R/GRCh37.R
 9ecd421a72ea5d25f31c5a23571aebb8 *R/GRCh38.R
@@ -12,7 +12,7 @@ a5af278a646212f8f4049e7a9240432c *R/bubbles.R
 6d9703b330cd1a7673b529a80a776855 *R/dendrogram.R
 daf72ebe3426b82455a4f6e7ff544905 *R/densityplot.R
 54e60774a1b2dce1d241df1d966e02cd *R/genomemap.R
-cbe945fb66a729400270cb4e6761cb9b *R/heatmap.R
+9016a711956128cc49e7694948d9eeaa *R/heatmap.R
 98538241ba7e94903f84f64a7d7fe3f9 *R/manhattan.R
 5549d4ab8043715b4c3c4526710e875f *R/network.R
 55204a9b541c62f26279398eca160e41 *R/pie.R
@@ -23,6 +23,7 @@ afc2390a300fe5a394d7ca8af3163841 *R/three.R
 199693d57139880492b5f44df787c214 *R/toJSON.R
 34f3a2eb10c030b85c6a5fad45dd99e0 *R/utils.R
 4361666d3207b2b007b06b447e88130f *R/wordcloud.R
+d0ae25410947b01d67a6a7ef0010800d *inst/CITATION
 a8f39eb67766f03af492fe4589ec7dff *inst/R4web/form.php
 edf2504f6a298705d5794daa5eb67ef4 *inst/R4web/header.php
 2bdcbb3ea82e3c572a574485344fad40 *inst/R4web/images/progressdot.gif
@@ -75,7 +76,7 @@ cc82d55bc7b5dd6d19a50a0191a2fff4 *man/bubbles_rjs.Rd
 caadfa275186fd3010591cd0d816d4f2 *man/densityplot_rjs.Rd
 28193c9490800c6814a90f24837ef7bc *man/genomemap_rjs.Rd
 f3eff075129f7827cbb591b75f7319f3 *man/getAssemblyFromFasta.Rd
-a6034a83c054ec83a3d4312d8ab6bf10 *man/heatmap_rjs.Rd
+641748b6d9890c56b7c2f8ad44dfcd2f *man/heatmap_rjs.Rd
 e03bba9f9e7c1a8e617f64c0362de040 *man/hiveplot_rjs.Rd
 aa3211b9ef88a5f881183b3f7990d62b *man/manhattan_rjs.Rd
 643845deb9c6d89f153e2014b3183733 *man/network_rjs.Rd

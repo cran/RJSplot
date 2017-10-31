@@ -1,0 +1,23 @@
+citHeader("RJSplot is published in this article:")
+citFooter("Please cite us when using it for data visualization.")
+
+citEntry("Article",
+         author = personList(as.person("David Barrios"),
+                         as.person("Carlos Prieto")),
+         title  = "RJSplot: Interactive Graphs With R",
+         journal = "Molecular Informatics",
+         year    = "2017",
+         doi    = "10.1002/minf.201700090",
+         url    = "http://dx.doi.org/10.1002/minf.201700090",
+         issn = "1868-1751",
+         keywords = "Data visualization, D3, R, Bioinformatics analysis",
+         PubMedID = "28980447",
+         textVersion = 
+         paste("Barrios D and Prieto C,\n", 
+               "RJSplot: Interactive Graphs With R\n",
+               "Molecular Informatics 2017, doi:10.1002/minf.201700090\n",
+               sep=""),
+               
+        )
+
+

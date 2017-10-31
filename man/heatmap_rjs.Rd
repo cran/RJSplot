@@ -15,8 +15,8 @@ The function creates a folder in your computer with an HTML document named index
 \usage{
 heatmap_rjs(data, metadata = NULL, scale = c("row", "column", "none"), cluster = TRUE,
             color = c("Reds", "Greens", "Blues", "RdBkGr", "RdWhBu"),
-            na.color = "transparent", cex = 1,
-            plot = TRUE, jupyter = FALSE, dir = "Heatmap")
+            na.color = "transparent", cex = 1, plot = TRUE, jupyter = FALSE, 
+            dir = "Heatmap", distfun = dist, hclustfun = hclust)
 }
 \arguments{
 \item{data}{numeric matrix of the values to be plotted.}
@@ -29,6 +29,8 @@ heatmap_rjs(data, metadata = NULL, scale = c("row", "column", "none"), cluster =
 \item{plot}{open resulting graph in your browser.}
 \item{jupyter}{embed the graph as an iframe into a Jupyter Notebook.}
 \item{dir}{a "character" string representing the directory where the graph will be saved.}
+\item{distfun}{function used to compute the distance between rows and columns.}
+\item{hclustfun}{function used to compute the hierarchical clustering.}
 }
 \description{
 \code{heatmap_rjs} creates interactive heatmaps.

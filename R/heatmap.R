@@ -1,4 +1,4 @@
-heatmapJSON <- function(x, meta, scale, cluster, color, na.color, cex){
+heatmapJSON <- function(x, meta, scale, cluster, color, na.color, cex, distfun = dist, hclustfun = hclust){
 if(!is.matrix(x) || !is.numeric(x)){
   x <- data.matrix(x)
   warning("data: a numeric matrix should be passed") 
@@ -15,10 +15,10 @@ rownames(x) <- rownames(x,FALSE)
 colnames(x) <- colnames(x,FALSE,"sample")
 
 if(cluster){
-  hcRows <- hclust(dist(x))
+  hcRows <- hclustfun(distfun(x))
   rowsJSON <- dendrogramJSON(hcRows)
 
-  hcCols <- hclust(dist(t(x)))
+  hcCols <- hclustfun(distfun(t(x)))
   colsJSON <- dendrogramJSON(hcCols)
 
   x <- x[c(hcRows$order),c(hcCols$order)]
@@ -67,6 +67,6 @@ options <- toJSON(list(scaleColor = color, NAcolor = na.color, cex = cex))
 return(paste0("{\"rows\":",rowsJSON,",\"cols\":",colsJSON,",\"matrix\":",mat,",\"metadata\":",meta,",\"options\":",options,"}"))
 }
 
-heatmap_rjs<-function(data, metadata = NULL, scale = c("row", "column", "none"), cluster = TRUE, color=c("Reds","Greens","Blues","RdBkGr","RdWhBu"), na.color = "transparent", cex = 1, plot = TRUE, jupyter = FALSE, dir = "Heatmap"){
-createHTML(dir, c("d3.min.js", "jspdf.min.js", "functions.js", "heatmap.js"), heatmapJSON(data, metadata, scale, cluster, color, na.color, cex), plot, jupyter)
+heatmap_rjs<-function(data, metadata = NULL, scale = c("row", "column", "none"), cluster = TRUE, color=c("Reds","Greens","Blues","RdBkGr","RdWhBu"), na.color = "transparent", cex = 1, plot = TRUE, jupyter = FALSE, dir = "Heatmap", distfun = dist, hclustfun = hclust){
+createHTML(dir, c("d3.min.js", "jspdf.min.js", "functions.js", "heatmap.js"), heatmapJSON(data, metadata, scale, cluster, color, na.color, cex, distfun = dist, hclustfun = hclust), plot, jupyter)
 }

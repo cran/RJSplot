@@ -1,6 +1,6 @@
 Package: RJSplot
 Type: Package
-Version: 2.4
+Version: 2.5
 Date: 2017-10-31
 Title: Interactive Graphs with R
 Description: Creates interactive graphs with 'R'. It joins the data analysis power of R and the visualization libraries of JavaScript in one package.
@@ -12,6 +12,6 @@ NeedsCompilation: no
 Author: Carlos Prieto <cprietos@usal.es>,
   David Barrios <metal@usal.es>
 Maintainer: Carlos Prieto <cprietos@usal.es>
-Packaged: 2017-10-31 10:10:20 UTC; cprieto
+Packaged: 2017-10-31 15:14:59 UTC; cprieto
 Repository: CRAN
-Date/Publication: 2017-10-31 11:15:30 UTC
+Date/Publication: 2017-11-02 11:19:32 UTC

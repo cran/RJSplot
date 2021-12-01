@@ -2,10 +2,10 @@
 \alias{createAssembly}
 \title{Creates a genome assembly for \code{genomemap_rjs} or \code{manhattan_rjs}.}
 \author{
-David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{http://bioinfo.usal.es/}
+David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{https://bioinfo.usal.es/}
 }
 \seealso{
-  The \sQuote{RJSplot} Website: \url{http://rjsplot.net}
+  The \sQuote{RJSplot} Website: \url{https://rjsplot.usal.es}
 
   \code{\link{genomemap_rjs}}.
 
@@ -27,7 +27,7 @@ a data frame in BED format to be used as an assembly in \code{genomemap_rjs} or 
 }
 \examples{
 ## Creates a fake genome assembly for its posterior use as parameter of genomemap or manhattan plot
-## Live examples and full tutorial on http://rjsplot.net
+## Live examples and full tutorial on https://rjsplot.usal.es
 
 ## Generate a test assembly with three scaffolds
 assembly <- createAssembly(c("scaffold1","scaffold2","scaffold3"), c(1000000,800000,650000))

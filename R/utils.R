@@ -10,9 +10,7 @@ createHTML <- function(dir, dependencies, json, show = TRUE, jupyter = FALSE){
   www <- wwwDirectory()
   indexhtml <- paste(dir, "index.html", sep = "/")
   html <- scan(file = paste(www, "template.html", sep = "/"), what = character(0), sep = "\n", quiet = TRUE)
-  name <- strsplit(dir,"/")[[1]]
-  name <- name[length(name)]
-  html <- sub("<!--title-->", name, html)
+  html <- sub("<!--title-->", basename(dir), html)
   dep <- "<!--head-->"
   for(i in seq_along(dependencies)){
     if(grepl(".css$",dependencies[i])){

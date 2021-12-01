@@ -49,10 +49,10 @@ var xExtent = [],
     yExtent = [];
   d3.entries(json.data).forEach(function(a) { 
     a.value.forEach(function(a){
-      a.y = +a.y;
-      yExtent.push(a.y);
-      a.x = +a.x;
+      a.x = +a[0];
       xExtent.push(a.x);
+      a.y = +a[1];
+      yExtent.push(a.y);
     });
   });
 

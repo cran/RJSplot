@@ -1,12 +1,11 @@
 var docSize = viewport(),
-    width = Math.min(docSize.width,docSize.height) - 30,
-    height = width,
-    margin = {top: 150, right: 10, bottom: 10, left: 150};
+    width = docSize.width - 30,
+    height = docSize.height - 30,
+    margin = {tl: 150, br: 10},
+    triangle = true,
+    size = Math.min(width,height);
 
-width = width - margin.left - margin.right;
-height = height - margin.top - margin.bottom;
-
-var triangle = true;
+    size = size - margin.tl - margin.br;
 
 window.onload = function(){
 
@@ -14,16 +13,16 @@ window.onload = function(){
       attr = json.attr?json.attr:{},
       options = json.options?json.options:{};
 
-  var x = d3.scale.ordinal().rangeBands([0, width]),
+  var x = d3.scale.ordinal().rangeBands([0, size]),
       z = d3.scale.linear().range([0.1,1]).domain(d3.extent(json.links, function(d){return d[attr.weight];})),
       color = d3.scale.category10();
 
   displaySelect();
 
-  var svg = d3.select("body").append("div")
-    .attr("class","plot")
-    .style("text-align","center")
-    .append("svg")
+  var svg = d3.select("body")
+       .append("svg")
+         .attr("width", width)
+         .attr("height", height);
 
   var cex = options.cex?options.cex:1;
 
@@ -62,8 +61,8 @@ window.onload = function(){
 
   svg.append("rect")
       .style("fill","#eee")
-      .attr("width", width)
-      .attr("height", height);
+      .attr("width", size)
+      .attr("height", size);
 
   var row = svg.selectAll(".row")
       .data(matrix)
@@ -73,7 +72,7 @@ window.onload = function(){
       .each(row);
 
   row.append("line")
-      .attr("x2", width)
+      .attr("x2", size)
 	.style("stroke","#fff");
 
   row.append("text")
@@ -88,7 +87,7 @@ window.onload = function(){
       .attr("transform", function(d, i) { return "translate(" + x(i) + ")rotate(-90)"; });
 
   column.append("line")
-      .attr("x1", -width)
+      .attr("x1", -size)
 	.style("stroke","#fff");
 
   column.append("text")
@@ -154,18 +153,12 @@ if(i == p.x) return "red"; else return null;
   function layout(value){
     triangle = (value == "triangle");
 
-    d3.select(".plot>svg").attr(triangle?{
-       "width": width*1.75,
-       "height": height
-      }:{
-       "width": (width + margin.left + margin.right),
-       "height": (height + margin.top + margin.bottom)
-    })
+    d3.select("svg").attr('height',triangle?size:height);
 
-    svg.attr("transform", triangle? "translate(" + width/6 + "," + height + ")rotate(-45)" : "translate(" + margin.left + "," + margin.top + ")")
+    svg.attr("transform", triangle? "translate(" + ((width-Math.sqrt(size*size*2))/2) + "," + size + ")rotate(-45)" : "translate(" + ((margin.tl+width-size)/2) + "," + margin.tl + ")")
 
     row.selectAll("text").attr(triangle?{
-      "x": width + 6,
+      "x": size + 6,
       "text-anchor": "start"
     }:{
       "x": -6,
@@ -225,22 +218,22 @@ function svg2pdf(){
     alert("PDF export not available in triangle mode!");
   }else{
 
-    var doc = new jsPDF("l","pt",[width + margin.left + margin.right, height + margin.top + margin.bottom]),
+    var doc = new jsPDF("l","pt",[size+margin.tl+margin.br, size+margin.tl+margin.br]),
         svgDoc = d3.select("svg").node(),
         dim = d3.select("rect.cell").attr("width");
 
     doc.setDrawColor(255);
     doc.setFillColor(238,238,238);
-    for(i=0;i<width/dim;i++){
-      for(j=0;j<height/dim;j++){
-        doc.rect((i*dim+margin.left),(j*dim+margin.top), dim, dim, 'FD');
+    for(i=0;i<size/dim;i++){
+      for(j=0;j<size/dim;j++){
+        doc.rect((i*dim+margin.tl),(j*dim+margin.tl), dim, dim, 'FD');
       }
     }
 
     d3.selectAll(".cell").each(function(){
       var self = d3.select(this),
-          x = +self.attr("x") + margin.left,
-          y = d3.transform(d3.select(this.parentNode).attr("transform")).translate[1] + margin.top,
+          x = +self.attr("x") + margin.tl,
+          y = d3.transform(d3.select(this.parentNode).attr("transform")).translate[1] + margin.tl,
           o = self.style("fill-opacity");
       try{
         var color = d3.rgb(self.style("fill"));
@@ -256,17 +249,17 @@ function svg2pdf(){
     doc.setTextColor(64);
     d3.selectAll(".row text").each(function(){
       var self = d3.select(this),
-          y = d3.transform(d3.select(this.parentNode).attr("transform")).translate[1] + margin.top,
+          y = d3.transform(d3.select(this.parentNode).attr("transform")).translate[1] + margin.tl,
           txt = self.text(),
           txtWidth = doc.getStringUnitWidth(txt) * 10,
-          x = margin.left - txtWidth;
+          x = margin.tl - txtWidth;
       doc.text(x-6, y+14, txt);
     });
     d3.selectAll(".column text").each(function(){
       var self = d3.select(this),
-          x = d3.transform(d3.select(this.parentNode).attr("transform")).translate[0] + margin.left,
+          x = d3.transform(d3.select(this.parentNode).attr("transform")).translate[0] + margin.tl,
           txt = self.text(),
-          y = margin.top;
+          y = margin.tl;
       doc.text(x+14, y-6, txt, null, 90);
     });
 

@@ -2,22 +2,22 @@
 \alias{network_rjs}
 \title{Produce interactive network graph}
 \author{
-David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{http://bioinfo.usal.es/}
+David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{https://bioinfo.usal.es/}
 }
 \value{
 The function creates a folder in your computer with an HTML document named index.html which contains the graph. This file can be directly opened with your browser.
 }
 \seealso{
-  The \sQuote{RJSplot} Website: \url{http://rjsplot.net}
+  The \sQuote{RJSplot} Website: \url{https://rjsplot.usal.es}
 
   \code{\link{dendrogram_rjs}}, \code{\link{densityplot_rjs}}, \code{\link{genomemap_rjs}}, \code{\link{heatmap_rjs}}, \code{\link{manhattan_rjs}}, \code{\link{network_rjs}}, \code{\link{scatterplot_rjs}}, \code{\link{symheatmap_rjs}}, \code{\link{wordcloud_rjs}}, \code{\link{boxplot_rjs}}, \code{\link{bubbles_rjs}}, \code{\link{hiveplot_rjs}}, \code{\link{piechart_rjs}}, \code{\link{barplot_rjs}}, \code{\link{tables_rjs}}, \code{\link{surface3d_rjs}}, \code{\link{scatter3d_rjs}}.
 }
 \usage{
-network_rjs(links, nodes = NA,
+network_rjs(links, nodes = NULL,
             weight = NULL, linkLabel = NULL, linkColor = NULL,
             group = NULL, size = NULL, color = NULL, label = NULL,
             nodeColorScale = c("RdBk","RdBkGr"), cex = 1, 
-            plot = TRUE, jupyter = FALSE, dir = "Network")
+            plot = TRUE, jupyter = FALSE, dir = tempdir())
 }
 \arguments{
 \item{links}{an edge list table stored in a data frame with at least two columns (source node id and target node id).}
@@ -39,8 +39,10 @@ network_rjs(links, nodes = NA,
 \code{network_rjs} creates an interactive network graph.
 }
 \examples{
-## Create an interactive network graph in the folder "Network" of your local machine
-## Live examples on http://rjsplot.net
+## Create an interactive network graph in a temporal directory of your local machine
+## Live examples on https://rjsplot.usal.es
+
+if(interactive()){
 # Prepare data
 x <- 1-cor(t(mtcars))
 
@@ -50,4 +52,5 @@ links <- data.frame(source=source,target=target,value=as.vector(x))
 
 # Generate the network graph
 network_rjs(links[links[,3]>0.1,], mtcars, group = "cyl", size = "hp", color = "mpg")
+}
 }

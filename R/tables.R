@@ -1,5 +1,5 @@
 #create html wrapper for data table
-tables_rjs<-function(data, plot = TRUE, jupyter = FALSE, dir = "DataTable"){
+tables_rjs<-function(data, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 
 tablesHTML<-function(con){
   if(is.data.frame(data) || is.matrix(data)){

@@ -2,20 +2,21 @@
 \alias{scatterplot_rjs}
 \title{Produce and interactive Scatter plot (XY plot).}
 \author{
-David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{http://bioinfo.usal.es/}
+David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{https://bioinfo.usal.es/}
 }
 \value{
 The function creates a folder in your computer with an HTML document named index.html which contains the graph. This file can be directly opened with your browser.
 }
 \seealso{
-  The \sQuote{RJSplot} Website: \url{http://rjsplot.net}
+  The \sQuote{RJSplot} Website: \url{https://rjsplot.usal.es}
 
   \code{\link{dendrogram_rjs}}, \code{\link{densityplot_rjs}}, \code{\link{genomemap_rjs}}, \code{\link{heatmap_rjs}}, \code{\link{manhattan_rjs}}, \code{\link{network_rjs}}, \code{\link{scatterplot_rjs}}, \code{\link{symheatmap_rjs}}, \code{\link{wordcloud_rjs}}, \code{\link{boxplot_rjs}}, \code{\link{bubbles_rjs}}, \code{\link{hiveplot_rjs}}, \code{\link{piechart_rjs}}, \code{\link{barplot_rjs}}, \code{\link{tables_rjs}}, \code{\link{surface3d_rjs}}, \code{\link{scatter3d_rjs}}.
 }
 \usage{
-scatterplot_rjs(x, y, id = NA, xlab = "", ylab = "", xlim = NA, ylim = NA, col = NA,
-                pch = NA, abline.x = NA, abline.y = NA, cex = 1,
-                plot = TRUE, jupyter = FALSE, dir = "ScatterPlot")
+scatterplot_rjs(x, y, id = NULL, xlab = "", ylab = "",
+                xlim = NULL, ylim = NULL, col = NULL,
+                pch = NULL, abline.x = NULL, abline.y = NULL, cex = 1,
+                plot = TRUE, jupyter = FALSE, dir = tempdir())
 }
 \arguments{
 \item{x}{a vector with the x data of each point.}
@@ -38,12 +39,14 @@ scatterplot_rjs(x, y, id = NA, xlab = "", ylab = "", xlim = NA, ylim = NA, col =
 \code{scatterplot_rjs} generates an interactive Scatter Plot.
 }
 \examples{
-## Create an interactive Scatter plot in the folder "ScatterPlot" of your local machine
-## Live examples on http://rjsplot.net
+## Create an interactive Scatter plot in a temporal directory of your local machine
+## Live examples on https://rjsplot.usal.es
 
+if(interactive()){
 # Scatter plot creation
 scatterplot_rjs(iris$Sepal.Width, iris$Sepal.Length,
-                abline.x = c(3.4,3.8), abline.y = c(5.8,7),
-                col = iris$Species, pch = as.numeric(iris$Species), id = iris$Species,
-                xlab = "Sepal Width (cm)", ylab = "Sepal Length (cm)")
+  abline.x = c(3.4,3.8), abline.y = c(5.8,7),
+  col = iris$Species, pch = as.numeric(iris$Species), id = iris$Species,
+  xlab = "Sepal Width (cm)", ylab = "Sepal Length (cm)")
+}
 }

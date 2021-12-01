@@ -2,20 +2,20 @@
 \alias{circularfv_rjs}
 \title{Pruduce a circular sequence viewer.}
 \author{
-David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{http://bioinfo.usal.es/}
+David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{https://bioinfo.usal.es/}
 }
 \value{
 The function creates a folder in your computer with an HTML document named index.html which contains the graph. This file can be directly opened with your browser.
 }
 \seealso{
-  The \sQuote{RJSplot} Website: \url{http://rjsplot.net}
+  The \sQuote{RJSplot} Website: \url{https://rjsplot.usal.es}
 
   \code{\link{dendrogram_rjs}}, \code{\link{densityplot_rjs}}, \code{\link{genomemap_rjs}}, \code{\link{heatmap_rjs}}, \code{\link{manhattan_rjs}}, \code{\link{network_rjs}}, \code{\link{scatterplot_rjs}}, \code{\link{symheatmap_rjs}}, \code{\link{wordcloud_rjs}}, \code{\link{boxplot_rjs}}, \code{\link{bubbles_rjs}}, \code{\link{hiveplot_rjs}}, \code{\link{piechart_rjs}}, \code{\link{barplot_rjs}}, \code{\link{tables_rjs}}, \code{\link{surface3d_rjs}}, \code{\link{scatter3d_rjs}}.
 }
 
 \usage{
 circularfv_rjs(sequence, features = FALSE,
-               plot = TRUE, jupyter = FALSE, dir = "CircularFV")
+               plot = TRUE, jupyter = FALSE, dir = tempdir())
 }
 \arguments{
 \item{sequence}{a "character" string giving the DNA sequence.}
@@ -28,7 +28,8 @@ circularfv_rjs(sequence, features = FALSE,
 \code{circularfv_rjs} creates  a circular sequence viewer.
 }
 \examples{
-## Creates a circular sequence viewer in the folder "CircularFV" of your local machine
+if(interactive()){
+## Creates a circular sequence viewer in a temporal directory of your local machine
 ## Generate test input data
 sequence <- paste(sample(c("c","a","t","g"), 10000, replace = TRUE), collapse = "")
 data <- matrix(round(runif(12,0,10000)),6,2)
@@ -38,4 +39,5 @@ color = c("SandyBrown","Tan","Wheat","SteelBlue","LightSkyBlue","LightBlue"))
 
 ## Create the circular sequence viewver
 circularfv_rjs(sequence, features)
+}
 }

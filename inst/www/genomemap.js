@@ -93,7 +93,7 @@ displayButtons();
 bioinfoLogo();
 }
 
-function displayChr(gChr, chrScale, json, selector){
+function displayChr(gChr, chrScale, json){
 
       var bands = gChr.selectAll(".band")
         .data(json);

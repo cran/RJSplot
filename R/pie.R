@@ -19,6 +19,6 @@ return(toJSON(json))
 
 
 #create html wrapper for barplot
-piechart_rjs<-function(data, cex = 1, plot = TRUE, jupyter = FALSE, dir = "Piechart"){
+piechart_rjs<-function(data, cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 createHTML(dir, c("d3.min.js","functions.js","pie.js"), piechartJSON(data, cex), plot, jupyter)
 }

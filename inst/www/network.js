@@ -83,7 +83,6 @@ d3.select("head").append("style")
 "div.tab-wrap { padding: 0 10px; }"+
 "div.tab-wrap>div:first-child { text-align: right; border-top: solid 1px #888; }"+
 "div.tab-wrap>div:first-child>div { position: relative; top: -24px; display: inline-block; padding: 4px 8px; margin: 0 2px; border: solid 1px #888; border-radius: 5px 5px 0 0; background: #fff; width: 100px; text-align: center; cursor: pointer; }"+
-"@-moz-document url-prefix() { div.tab-wrap>div:first-child>div { top: -25px; } }"+
 "div.tables { overflow-y: auto; clear: both; }"+
 "div.switch { width: 30px; height: 21px; margin: 5px; background-color: #888; border-radius: 5px; float: right; position: relative; top: -28px; margin-right: 10px; cursor: pointer; }")
 

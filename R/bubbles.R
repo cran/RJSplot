@@ -20,6 +20,9 @@ if(!is.null(size)){
   }
 }
 
+nodes <- as.list(nodes)
+names(nodes) <- NULL
+
 json <- list(nodes = nodes)
 
 names <- colnames(data)
@@ -31,7 +34,7 @@ return(toJSON(json))
 
 
 #create html wrapper for barplot
-bubbles_rjs<-function(data, size = NULL, plot = TRUE, jupyter = FALSE, dir = "BubblePlot"){
+bubbles_rjs<-function(data, size = NULL, plot = TRUE, jupyter = FALSE, dir = tempdir()){
   if(min(data[,1:2])<0)
     warning("You only must pass absolute values")
   else

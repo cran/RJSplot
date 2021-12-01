@@ -13,7 +13,7 @@ for(i in seq_along(data)){
   aux <- data[[i]]
   aux <- aux[!is.na(aux)]
   aux <- density(aux)
-  json[[names[i]]] <- data.frame(x = aux$x, y = aux$y)
+  json[[names[i]]] <- signif(cbind(aux$x,aux$y),6)
 }
 
 labels <- list(x = xlab, y = ylab)
@@ -28,6 +28,6 @@ return(toJSON(json))
 
 
 #create html wrapper for boxplot
-densityplot_rjs<-function(data, xlab = "", ylab = "", cex = 1, plot = TRUE, jupyter = FALSE, dir = "DensityPlot"){
+densityplot_rjs<-function(data, xlab = "", ylab = "", cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 createHTML(dir, c("d3.min.js","jspdf.min.js","functions.js","density.js"), densityJSON(data, xlab, ylab, cex), plot, jupyter)
 }

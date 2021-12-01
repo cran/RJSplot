@@ -1,4 +1,4 @@
-var data = {};
+var nodes = [];
 
 var docSize = viewport(),
     width = docSize.width - 40,
@@ -28,12 +28,23 @@ var r = d3.scale.sqrt()
 
 window.onload = function(){
 
-data = JSON.parse(d3.select("#data").text());
+var data = JSON.parse(d3.select("#data").text());
 
-r.domain(d3.extent(data.nodes, function(d) { return d.size?d.size:d.a+d.b; }))
+  var len = data.nodes[0].length;
 
-data.nodes.forEach(function(d) {
-    d.r = r(d.size?d.size:d.a+d.b);
+  for(var i = 0; i<len; i++){
+    var node = {};
+    node.name = data.nodes[0][i];
+    node.a = data.nodes[1][i];
+    node.b = data.nodes[2][i];
+    node.size = data.nodes[3] ? data.nodes[3][i] : node.a+node.b;
+    nodes.push(node);
+  }
+
+r.domain(d3.extent(nodes, function(d) { return d.size; }))
+
+nodes.forEach(function(d) {
+    d.r = r(d.size);
     d.cr = Math.max(minRadius, d.r);
     d.k = fraction(d.a, d.b);
     if (isNaN(d.k)) d.k = .5;
@@ -61,7 +72,7 @@ var svg = d3.select("body").append("svg")
     svg.append("g")
       .attr("class","layout")
 
-force.nodes(data.nodes).start();
+force.nodes(nodes).start();
 updateNodes();
 tick({alpha: 0}); // synchronous update
 
@@ -97,7 +108,7 @@ function displayLegend(names){
 
 // Update the displayed nodes.
 function updateNodes() {
-  var node = d3.select("svg>g.layout").selectAll(".node").data(data.nodes, function(d) { return d.name; });
+  var node = d3.select("svg>g.layout").selectAll(".node").data(nodes, function(d) { return d.name; });
 
   node.exit().remove();
 
@@ -186,7 +197,7 @@ function bias(alpha) {
 
 // Resolve collisions between nodes.
 function collide(alpha) {
-  var q = d3.geom.quadtree(data.nodes);
+  var q = d3.geom.quadtree(nodes);
   return function(d) {
     var r = d.cr + maxRadius + collisionPadding,
         nx1 = d.x - r,

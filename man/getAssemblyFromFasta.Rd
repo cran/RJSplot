@@ -2,10 +2,10 @@
 \alias{getAssemblyFromFasta}
 \title{Create an assembly from a FASTA file for its use as parameter of \code{genomemap_rjs} or \code{manhattan_rjs}.}
 \author{
-David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{http://bioinfo.usal.es/}
+David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{https://bioinfo.usal.es/}
 }
 \seealso{
-  The \sQuote{RJSplot} Website: \url{http://rjsplot.net}
+  The \sQuote{RJSplot} Website: \url{https://rjsplot.usal.es}
 
   \code{\link{genomemap_rjs}}.
 
@@ -27,5 +27,5 @@ getAssemblyFromFasta(fasta)
 a data frame in BED format ready to use as an assembly in \code{genomemap_rjs} or \code{manhattan_rjs}.
 }
 \examples{
-## Live examples and full tutorial on http://rjsplot.net
+## Live examples and full tutorial on https://rjsplot.usal.es
 }

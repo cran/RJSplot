@@ -60,14 +60,21 @@ window.onload = function(){
 
   d3.entries(colorScales).forEach(function(d){ addGradient(defs,d.key,d.value); });
 
-  var rowClust = svg.append("g")
+  if(data.rows){
+    var rowClust = svg.append("g")
       .attr("class","rowClust")
       .attr("clip-path",addMask(defs,"rowClust",height,margin.left))
       .attr("transform", "translate(0,"+margin.top+")rotate(90)scale(1,-1)");
-  var colClust = svg.append("g")
+    dendrogram(rowClust,data.rows,height,margin.left-4);
+  }
+  if(data.cols || data.metadata){
+    var colClust = svg.append("g")
       .attr("class","colClust")
       .attr("clip-path",addMask(defs,"colClust",width,margin.top))
       .attr("transform", "translate("+margin.left+",0)");
+    dendrogram(colClust,data.cols,width,(data.metadata?70:margin.top)-4);
+    drawMetadata(colClust,data.metadata);
+  }
   var matrix = svg.append("g")
       .attr("class","matrix")
       .attr("clip-path",addMask(defs,"matrix",width,height))
@@ -79,10 +86,6 @@ window.onload = function(){
       .attr("class","colNames axis")
       .attr("transform", "translate("+margin.left+","+(height+margin.top+4)+")");
 
-  dendrogram(rowClust,data.rows,height,margin.left-4);
-  dendrogram(colClust,data.cols,width,(data.metadata?70:margin.top)-4);
-
-  drawMetadata(colClust,data.metadata);
   drawMatrix(matrix,data.matrix,options.scaleColor);
 
   displayNames(rowNames,data.matrix.rows,[0,height],"right");
@@ -116,7 +119,8 @@ function dendrogram(svg,root,width,height){
     .enter().append("path")
       .attr("class", "link")
       .attr("d", diagonal)
-  }
+  }else
+    svg.append("g");
 }
 
 function drawMetadata(svg,metadata){

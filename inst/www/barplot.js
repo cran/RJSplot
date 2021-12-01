@@ -16,10 +16,6 @@ window.onload = function(){
     width = width + 30;
   }
 
-  var largerword = d3.max(json.rows,function(d){ return d.length; })*4;
-  if(largerword>margin.bottom)
-    margin.bottom = largerword;
-
   width = width - margin.left - margin.right;
   height = height - margin.top - margin.bottom;
 
@@ -52,27 +48,38 @@ window.onload = function(){
   svg.append("style").text("text { font-size: "+(cex*10)+"px; font-family: sans-serif; }"+
 ".axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }"); 
 
-  svg = svg.append("g")
+  var g = svg.append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   // axis
-  svg.append("g")
+  var gxaxis = g.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + (height + 20) + ")")
-      .call(xAxis)
+
+  gxaxis.call(xAxis)
 		.append("text")
 		  .attr("x", width)
 		  .attr("y", -4)
 		  .style("text-anchor", "end")
 		  .text(json.labels.x);
 
-  svg.selectAll(".x.axis .tick text")
+  gxaxis.selectAll(".tick text")
 	  .attr("x", 8)
 	  .attr("y", 8)
 	  .attr("transform", "rotate(45)")
 	  .style("text-anchor", "start")
 
-  svg.append("g")
+  var gxaxisRect = gxaxis.node().getBoundingClientRect();
+  if(gxaxisRect.height>margin.bottom){
+    margin.bottom = gxaxisRect.height + 10;
+    svg.attr("height", height + margin.top + margin.bottom);
+  }
+  if(gxaxisRect.width>width+margin.right){
+    margin.right = gxaxisRect.width - width;
+    svg.attr("width", width + margin.left + margin.right);
+  }
+
+  g.append("g")
       .attr("class", "y axis")
       .attr("transform", "translate(-20,0)")
       .call(yAxis)
@@ -84,7 +91,7 @@ window.onload = function(){
 		  .text(json.labels.y);
 
   // initialize bars
-  var gBar = svg.selectAll(".gBar")
+  var gBar = g.selectAll(".gBar")
       .data(json.data)
     .enter().append("g")
       .attr("class","gBar")
@@ -105,7 +112,7 @@ window.onload = function(){
   if(!single){
 
     // draw legend
-    var legend = svg.append("g")
+    var legend = g.append("g")
         .attr("class","legend")
         .attr("transform", "translate("+width+",100)")
         .selectAll("g")

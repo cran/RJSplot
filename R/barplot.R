@@ -18,7 +18,7 @@ if(!is.numeric(cex))
 
 json <- list(data = height, rows = rnames, cols = cnames, labels = labels, cex = cex)
 
-if(!(length(ylim)==1 && is.na(ylim))){
+if(!is.null(ylim)){
   if(length(ylim)==1)
     ylim <- c(0, ylim)
   json$scale <- ylim
@@ -29,6 +29,6 @@ return(toJSON(json))
 
 
 #create html wrapper for barplot
-barplot_rjs<-function(height, xlab = "", ylab = "", ylim = NA, cex = 1, plot = TRUE, jupyter = FALSE, dir = "Barplot"){
+barplot_rjs<-function(height, xlab = "", ylab = "", ylim = NULL, cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 createHTML(dir, c("d3.min.js","jspdf.min.js","functions.js","barplot.js"), barplotJSON(height, xlab, ylab, ylim, cex), plot, jupyter)
 }

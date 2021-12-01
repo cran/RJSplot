@@ -2,20 +2,20 @@
 \alias{barplot_rjs}
 \title{Produce interactive bar plot(s).}
 \author{
-David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{http://bioinfo.usal.es/}
+David Barrios and Carlos Prieto. Bioinformatics Service of Nucleus, University of Salamanca. See \url{https://bioinfo.usal.es/}
 }
 \value{
 The function creates a folder in your computer with an HTML document named index.html which contains the graph. This file can be directly opened with your browser.
 }
 \seealso{
-  The \sQuote{RJSplot} Website: \url{http://rjsplot.net}
+  The \sQuote{RJSplot} Website: \url{https://rjsplot.usal.es}
 
   \code{\link{dendrogram_rjs}}, \code{\link{densityplot_rjs}}, \code{\link{genomemap_rjs}}, \code{\link{heatmap_rjs}}, \code{\link{manhattan_rjs}}, \code{\link{network_rjs}}, \code{\link{scatterplot_rjs}}, \code{\link{symheatmap_rjs}}, \code{\link{wordcloud_rjs}}, \code{\link{boxplot_rjs}}, \code{\link{bubbles_rjs}}, \code{\link{hiveplot_rjs}}, \code{\link{piechart_rjs}}, \code{\link{barplot_rjs}}, \code{\link{tables_rjs}}, \code{\link{surface3d_rjs}}, \code{\link{scatter3d_rjs}}.
 }
 
 \usage{
-barplot_rjs(height, xlab = "", ylab = "", ylim = NA, cex = 1,
-            plot = TRUE, jupyter = FALSE, dir = "Barplot")
+barplot_rjs(height, xlab = "", ylab = "", ylim = NULL, cex = 1,
+            plot = TRUE, jupyter = FALSE, dir = tempdir())
 }
 \arguments{
 \item{height}{either a vector or matrix of values describing the bars which make up the plot.}
@@ -31,7 +31,9 @@ barplot_rjs(height, xlab = "", ylab = "", ylim = NA, cex = 1,
 \code{barplot_rjs} produce interactive bar plot(s) of the given values.
 }
 \examples{
-## Create an interactive barplot in the folder "Barplot" of your local machine
-## Live examples on http://rjsplot.net
+## Create an interactive barplot in a temporal directory of your local machine
+## Live examples on https://rjsplot.usal.es
+if(interactive()){
 barplot_rjs(USArrests, "states", "arrests")
+}
 }

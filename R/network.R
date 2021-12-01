@@ -18,7 +18,7 @@ for(i in c("weight","linkLabel","linkColor")){
 }
 
 newNodes <- data.frame(name = name)
-if(!(length(nodes)==1 && is.na(nodes))){
+if(!is.null(nodes)){
 
   for(i in c("group","size","color","label")){
     attrName <- eval(parse(text=i))
@@ -72,16 +72,16 @@ return(toJSON(json))
 }
 
 #create html wrapper for force network graph
-network_rjs<-function(links, nodes = NA, weight = NULL, linkLabel = NULL, linkColor = NULL, group = NULL, size = NULL, color = NULL, label = NULL, nodeColorScale = c("RdBk","RdBkGr"), cex = 1, plot = TRUE, jupyter = FALSE, dir = "Network"){
+network_rjs<-function(links, nodes = NULL, weight = NULL, linkLabel = NULL, linkColor = NULL, group = NULL, size = NULL, color = NULL, label = NULL, nodeColorScale = c("RdBk","RdBkGr"), cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 createHTML(dir, c("datatables.min.css","jquery.min.js","datatables.min.js","d3.min.js","jspdf.min.js","functions.js","network.js"), networkJSON(links, nodes, group, size, color, label, weight, linkLabel, linkColor, nodeColorScale, cex), plot, jupyter)
 }
 
 #create html wrapper for symetric heatmap
-symheatmap_rjs<-function(links, nodes = NA, group = NULL, label = NULL, cex = 1, plot = TRUE, jupyter = FALSE, dir = "SymHeatmap"){
+symheatmap_rjs<-function(links, nodes = NULL, group = NULL, label = NULL, cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 createHTML(dir, c("d3.min.js","jspdf.min.js","functions.js","symheatmap.js"), networkJSON(links, nodes, group, label = label, cex = cex), plot, jupyter)
 }
 
 #create html wrapper for hiveplot
-hiveplot_rjs<-function(links, nodes = NA, group = NULL, size = NULL, color = NULL, cex = 1, plot = TRUE, jupyter = FALSE, dir = "HivePlot"){
+hiveplot_rjs<-function(links, nodes = NULL, group = NULL, size = NULL, color = NULL, cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 createHTML(dir, c("d3.min.js","functions.js","hive.js"), networkJSON(links, nodes, group, size, color, cex = cex), plot, jupyter)
 }

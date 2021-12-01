@@ -1,25 +1,35 @@
 #create json
 plotJSON<-function(x, y, id, xlab, ylab, xlim, ylim, col, pch, abline.x, abline.y, cex){
   data <- list()
-  nodes <- data.frame(x= x, y = y)
-  if(!(length(id)==1 && is.na(id)))
+  colNodes <- c("x","y")
+  nodes <- data.frame(x = x, y = y)
+  if(!is.null(id)){
+    colNodes <- c(colNodes,"id")
     nodes[,"id"] <- id
-  if(!(length(col)==1 && is.na(col)))
+  }
+  if(!is.null(col)){
+    colNodes <- c(colNodes,"col")
     nodes[,"col"] <- col
-  if(!(length(pch)==1 && is.na(pch)))
+  }
+  if(!is.null(pch)){
+    colNodes <- c(colNodes,"pch")
     nodes[,"pch"] <- pch
-  data$nodes <- nodes
+  }
+  data$colNodes <- colNodes
+  data$nodes <- as.list(nodes)
+  names(data$nodes) <- NULL
+
   data$labels <- list(x = xlab, y = ylab)
-  if(!(length(abline.x)==1 && is.na(abline.x)))
+  if(!is.null(abline.x))
     data$axis$x <- abline.x
-  if(!(length(abline.y)==1 && is.na(abline.y)))
+  if(!is.null(abline.y))
     data$axis$y <- abline.y
-  if(!(length(xlim)==1 && is.na(xlim))){
+  if(!is.null(xlim)){
     if(length(xlim)==1)
       xlim <- c(0, xlim)
     data$scales$x <- xlim
     }
-  if(!(length(ylim)==1 && is.na(ylim))){
+  if(!is.null(ylim)){
     if(length(ylim)==1)
       ylim <- c(0, ylim)
     data$scales$y <- ylim  
@@ -32,6 +42,6 @@ plotJSON<-function(x, y, id, xlab, ylab, xlim, ylim, col, pch, abline.x, abline.
 
 
 #create html wrapper for scatter plot
-scatterplot_rjs<-function(x, y, id = NA, xlab = "", ylab = "", xlim = NA, ylim = NA, col = NA, pch = NA, abline.x = NA, abline.y = NA, cex = 1, plot = TRUE, jupyter = FALSE, dir = "ScatterPlot"){
+scatterplot_rjs<-function(x, y, id = NULL, xlab = "", ylab = "", xlim = NULL, ylim = NULL, col = NULL, pch = NULL, abline.x = NULL, abline.y = NULL, cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 createHTML(dir, c("d3.min.js","jspdf.min.js","functions.js","plot.js"), plotJSON(x, y, id, xlab, ylab, xlim, ylim, col, pch, abline.x, abline.y, cex), plot, jupyter)
 }

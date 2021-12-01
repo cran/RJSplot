@@ -2,7 +2,7 @@
 dendrogramJSON<-function(hc){
 
   labels<-hc$labels
-  height<-hc$height
+  height<-signif(hc$height,3)
   merge<-data.frame(hc$merge)
 
   node <-  character(nrow(merge))
@@ -70,6 +70,6 @@ dendrometaJSON <- function(data, metadata, method, cex){
 }
 
 #create html wrapper for Dendrogram
-dendrogram_rjs<-function(data, metadata = NULL, method = "complete", cex = 1, plot = TRUE, jupyter = FALSE, dir = "Dendrogram"){
+dendrogram_rjs<-function(data, metadata = NULL, method = "complete", cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir()){
 createHTML(dir, c("d3.min.js", "jspdf.min.js", "functions.js", "dendrogram.js"), dendrometaJSON(data,metadata,method,cex), plot, jupyter)
 }

@@ -7,7 +7,7 @@ surface3dJSON <- function(x,color,xlab,ylab,zlab){
   return(toJSON(json))
 }
 
-surface3d_rjs <- function(x, color = "#fff", xlab = "x", ylab = "y", zlab = "z", plot = TRUE, jupyter = FALSE, dir = "Surface3d"){
+surface3d_rjs <- function(x, color = "#fff", xlab = "x", ylab = "y", zlab = "z", plot = TRUE, jupyter = FALSE, dir = tempdir()){
   createHTML(dir, c("three.min.js","OrbitControls.js","functions.js","surface3d.js"), surface3dJSON(x,color,xlab,ylab,zlab), plot, jupyter)
 }
 
@@ -23,6 +23,6 @@ scatter3dJSON <- function(x,y,z,color,xlab,ylab,zlab){
   return(toJSON(json))
 }
 
-scatter3d_rjs <- function(x, y, z, color = "#000", xlab = "x", ylab = "y", zlab = "z", plot = TRUE, jupyter = FALSE, dir = "Scatter3d"){
+scatter3d_rjs <- function(x, y, z, color = "#000", xlab = "x", ylab = "y", zlab = "z", plot = TRUE, jupyter = FALSE, dir = tempdir()){
   createHTML(dir, c("three.min.js","OrbitControls.js","functions.js","scatter3d.js"), scatter3dJSON(x,y,z,color,xlab,ylab,zlab), plot, jupyter)
 }

@@ -67,6 +67,6 @@ options <- toJSON(list(scaleColor = color, NAcolor = na.color, cex = cex))
 return(paste0("{\"rows\":",rowsJSON,",\"cols\":",colsJSON,",\"matrix\":",mat,",\"metadata\":",meta,",\"options\":",options,"}"))
 }
 
-heatmap_rjs<-function(data, metadata = NULL, scale = c("row", "column", "none"), cluster = TRUE, color=c("Reds","Greens","Blues","RdBkGr","RdWhBu"), na.color = "transparent", cex = 1, plot = TRUE, jupyter = FALSE, dir = "Heatmap", distfun = dist, hclustfun = hclust){
+heatmap_rjs<-function(data, metadata = NULL, scale = c("row", "column", "none"), cluster = TRUE, color=c("Reds","Greens","Blues","RdBkGr","RdWhBu"), na.color = "transparent", cex = 1, plot = TRUE, jupyter = FALSE, dir = tempdir(), distfun = dist, hclustfun = hclust){
 createHTML(dir, c("d3.min.js", "jspdf.min.js", "functions.js", "heatmap.js"), heatmapJSON(data, metadata, scale, cluster, color, na.color, cex, distfun, hclustfun), plot, jupyter)
 }

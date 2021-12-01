@@ -70,7 +70,7 @@ genomemapJSON <- function(data, assembly){
   json$chromosomes <- get.chromosomes(assembly)
   json$data <- list()
   json$max <- max(assembly[,'end'])
-  if(!(length(data)==1 && is.na(data))){
+  if(!is.null(data)){
     data[,5] <- as.numeric(data[,5])
     data <- data[complete.cases(data[,5]),]
     if(nrow(data)>2000){
@@ -87,6 +87,6 @@ genomemapJSON <- function(data, assembly){
 }
 
 #create html wrapper for genome map
-genomemap_rjs <- function(assembly, track = NA, plot = TRUE, jupyter = FALSE, dir = "GenomeMap"){
+genomemap_rjs <- function(assembly, track = NULL, plot = TRUE, jupyter = FALSE, dir = tempdir()){
   createHTML(dir, c("d3.min.js","jspdf.min.js","functions.js","genomemap.js"), genomemapJSON(track, assembly), plot, jupyter)
 }

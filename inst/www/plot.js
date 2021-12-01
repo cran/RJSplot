@@ -39,25 +39,33 @@ window.onload = function(){
   svg = svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  json.nodes.forEach(function(d) {
-    d.x = +d.x;
-    d.y = +d.y;
-  });
+  var nodes = [],
+      len = json.nodes[0].length,
+      len2 = json.colNodes.length;
+
+  for(var i = 0; i<len; i++){
+    var node = {};
+    for(var j = 0; j<len2; j++){
+      node[json.colNodes[j]] = json.nodes[j][i];
+    }
+    nodes.push(node);
+  }
+
 
   if (typeof json.scales != 'undefined') {
     if (typeof json.scales.x != 'undefined') {
       x.domain(json.scales.x);
     } else {
-      x.domain(d3.extent(json.nodes, function(d) { return d.x; })).nice();
+      x.domain(d3.extent(nodes, function(d) { return d.x; })).nice();
     }
     if (typeof json.scales.y != 'undefined') {
       y.domain(json.scales.y);
     } else {
-      y.domain(d3.extent(json.nodes, function(d) { return d.y; })).nice();
+      y.domain(d3.extent(nodes, function(d) { return d.y; })).nice();
     }
   } else {
-    x.domain(d3.extent(json.nodes, function(d) { return d.x; })).nice();
-    y.domain(d3.extent(json.nodes, function(d) { return d.y; })).nice();
+    x.domain(d3.extent(nodes, function(d) { return d.x; })).nice();
+    y.domain(d3.extent(nodes, function(d) { return d.y; })).nice();
   }
 
   svg.append("g")
@@ -104,7 +112,7 @@ window.onload = function(){
   }
 
   svg.selectAll(".dot")
-      .data(json.nodes)
+      .data(nodes)
     .enter().append("path")
       .attr("class", "dot")
       .attr("transform", function(d) { return "translate("+x(d.x)+","+y(d.y)+")"; })
@@ -137,21 +145,6 @@ window.onload = function(){
 
   displayButtons();
   bioinfoLogo();
-}
-
-function validColor(col,scale) {
-    if (!col) { return scale("undefined"); }
-    if (col === "") { return false; }
-    if (col === "inherit") { return false; }
-    if (col === "transparent") { return false; }
-    
-    var image = document.createElement("img");
-    image.style.color = "transparent";
-    image.style.color = col;
-    if(image.style.color !== "transparent")
-      return col;
-    else
-      return scale(col);
 }
 
 function svg2pdf(){
